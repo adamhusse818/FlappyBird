@@ -1,0 +1,19 @@
+Date Began: October 8, 2023
+Date Finished: 
+Project Idea: Flappy Bird Game
+
+Description:
+A game where the user controls a bird and guides it between pipes. After each pair of pipes passed,
+the user earns a point. The game goes on forever and has no end. Mimics popular Flappy Bird game that
+was released in 2013 by Dong Nguyen.
+
+Features:
+1. User can select different backgrounds
+2. User high score will be saved so they can try to break it next time
+3. Graphical User Interface (GUI) using Java Swing provides a pleasant user expereince
+
+Requirements:
+1. Any backgrounds must be of size 450 x 550px
+2. Any grounds must be of size 450(or greater) x 50px
+
+To Run:
