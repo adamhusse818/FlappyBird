@@ -12,7 +12,7 @@ public class Bird implements ActionListener{
     private final Image[] wingPositions; // Storing wing positions
     Image wingDown, wingMid, wingUp, currentWingPos; // Images of each wing position, including the current one
     int wingIndex; // Keep track of the index of the current wing position
-    final static int xBird = 90; // X position of the bird. This MUST remain unchanged
+    final int xBird = 90; // X position of the bird. This MUST remain unchanged
     int yBird = 210; // Initial y position of the bird
     Timer timer; // Timer for how often we change the wing position
     int changeBy = 1; // Use this to change the element currently selected in the list
