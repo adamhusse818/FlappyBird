@@ -8,7 +8,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class Bird implements ActionListener{
-    final String spritePath = "Assets/Sprites/"; // Use this for all file paths for sprites
+    private final String spritePath = "Assets/Sprites/"; // Use this for all file paths for sprites
     private final Image[] wingPositions; // Storing wing positions
     Image currentWingPos; // Image of current wing position
     private int wingIndex; // Keep track of the index of the current wing position
@@ -16,28 +16,30 @@ class Bird implements ActionListener{
     int yBird = 210; // Initial y position of the bird
     Timer timer; // Timer for how often we change the wing position
     private int changeBy = 1; // Use this to change the element currently selected in the list
-    int velocity = 0; // Setting velocity of the bird
+    int velocity; // Setting velocity of the bird
     int acceleration = 1; // Setting acceleration of the bird
     final private String[] colors = {"Blue", "Yellow", "Red"}; // These are the different colors the bird can be
     private int colorIndex = 1; // Keep track of the color index. Original color is yellow, hence it being 1
 
     Bird(String color){
         // Initialize the list and images for each bird wing position
-        wingPositions = new Image[3];
+        this.wingPositions = new Image[3];
         Image wingUp = new ImageIcon(spritePath + color + "BirdUpFlap.png").getImage();
         Image wingMid = new ImageIcon(spritePath + color + "BirdMidFlap.png").getImage();
         Image wingDown = new ImageIcon(spritePath + color + "BirdDownFlap.png").getImage();
 
+        this.velocity = 0;
+
         // Add the images to the list and set the initial position of the bird wing to the middle
-        wingPositions[0] = wingUp;
-        wingPositions[1] = wingMid;
-        wingPositions[2] = wingDown;
-        currentWingPos = wingPositions[1];
-        wingIndex = 1;
+        this.wingPositions[0] = wingUp;
+        this.wingPositions[1] = wingMid;
+        this.wingPositions[2] = wingDown;
+        this.currentWingPos = this.wingPositions[1];
+        this.wingIndex = 1;
 
         // Initialize the timer and start it
-        timer = new Timer(85, this);
-        timer.start();
+        this.timer = new Timer(85, this);
+        this.timer.start();
     }
 
     /**
@@ -47,10 +49,10 @@ class Bird implements ActionListener{
      * The method also tests to make sure the bird stays within the panel
      */
     void jump(){
-        if(yBird - 10 <= 0){
-            yBird = 20;
+        if(this.yBird - 10 <= 0){
+            this.yBird = 20;
         }
-        velocity = -10;
+        this.velocity = -10;
         Game.playSound("Wing");
     }
 
@@ -59,17 +61,17 @@ class Bird implements ActionListener{
      */
     void changeColor(){
         // Check to make sure we aren't at the end of the list
-        if(colorIndex == colors.length - 1){
-            colorIndex = 0;
+        if(this.colorIndex == this.colors.length - 1){
+            this.colorIndex = 0;
         }
         else{
-            colorIndex++; // Change color index
+            this.colorIndex++; // Change color index
         }
 
         // Use index to change the wing positions to match the bird color
-        wingPositions[0] = new ImageIcon(spritePath + colors[colorIndex] + "BirdUpFlap.png").getImage();
-        wingPositions[1] = new ImageIcon(spritePath + colors[colorIndex] + "BirdMidFlap.png").getImage();
-        wingPositions[2] = new ImageIcon(spritePath + colors[colorIndex] + "BirdDownFlap.png").getImage();
+        this.wingPositions[0] = new ImageIcon(spritePath + colors[colorIndex] + "BirdUpFlap.png").getImage();
+        this.wingPositions[1] = new ImageIcon(spritePath + colors[colorIndex] + "BirdMidFlap.png").getImage();
+        this.wingPositions[2] = new ImageIcon(spritePath + colors[colorIndex] + "BirdDownFlap.png").getImage();
     }
 
     /**
@@ -83,12 +85,12 @@ class Bird implements ActionListener{
          Check to make sure we are not at the end of the list
          If we are, we have to go backwards
          */
-        if(wingIndex ==  2 || wingIndex == 0){
-            changeBy *= -1;
+        if(this.wingIndex ==  2 || this.wingIndex == 0){
+            this.changeBy *= -1;
         }
 
         // After determining whether we should go forwards or backwards, we change the wing position
-        currentWingPos = wingPositions[wingIndex + changeBy];
-        wingIndex += changeBy;
+        this.currentWingPos = this.wingPositions[this.wingIndex + this.changeBy];
+        this.wingIndex += this.changeBy;
     }
 }
