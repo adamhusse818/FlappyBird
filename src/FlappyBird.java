@@ -10,11 +10,13 @@
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 
-public class FlappyBird extends JFrame{
-    final String spritePath = "Assets/Sprites/"; // Use this for all file paths for sprites
+class FlappyBird extends JFrame{
     FlappyBird(){
         // Setting up the frame. Add title, change icon, set characteristics, etc.
         this.setTitle("Flappy Bird");
+        
+        // Use this for all file paths for sprites
+        String spritePath = "Assets/Sprites/";
         this.setIconImage(new ImageIcon(spritePath + "YellowBirdMidFlap.png").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
