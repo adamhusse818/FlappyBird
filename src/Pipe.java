@@ -10,14 +10,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class Pipe implements ActionListener{
-    final String spritePath = "Assets/Sprites/"; // Use this for all file paths for sprites
+class Pipe implements ActionListener{
     Image pipe; // Image of the pipe
     Timer timer; // Timer used for moving the pipe
     int xPipe; // Initial x position of every pair of pipes
     int yTopPipe; // Y position of the top pipe. Used for separation
     boolean passed; // Keep track of whether the bird has passed the pair of pipes
     Pipe(){
+        // Use this for all file paths for sprites
+        String spritePath = "Assets/Sprites/";
         this.pipe = new ImageIcon(spritePath + "PipeGreen.png").getImage();
 
         // Use the random class to generate a random y value for the pipe
