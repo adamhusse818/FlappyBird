@@ -8,8 +8,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class Bird implements ActionListener{
-    private final String spritePath = "Assets/Sprites/"; // Use this for all file paths for sprites
-    private final Image[] wingPositions; // Storing wing positions
+    private final String SPRITE_PATH = "Assets/Sprites/"; // Use this for all file paths for sprites
+    private Image[] wingPositions; // Storing wing positions
     Image currentWingPos; // Image of current wing position
     private int wingIndex; // Keep track of the index of the current wing position
     final int xBird = 90; // X position of the bird. This MUST remain unchanged
@@ -18,15 +18,15 @@ class Bird implements ActionListener{
     private int changeBy = 1; // Use this to change the element currently selected in the list
     int velocity; // Setting velocity of the bird
     int acceleration; // Setting acceleration of the bird
-    final private String[] colors = {"Blue", "Yellow", "Red"}; // These are the different colors the bird can be
+    private String[] colors = {"Blue", "Yellow", "Red"}; // These are the different colors the bird can be
     private int colorIndex = 1; // Keep track of the color index. Original color is yellow, hence it being 1
 
     Bird(String color){
         // Initialize the list and images for each bird wing position
         this.wingPositions = new Image[3];
-        Image wingUp = new ImageIcon(spritePath + color + "BirdUpFlap.png").getImage();
-        Image wingMid = new ImageIcon(spritePath + color + "BirdMidFlap.png").getImage();
-        Image wingDown = new ImageIcon(spritePath + color + "BirdDownFlap.png").getImage();
+        Image wingUp = new ImageIcon(SPRITE_PATH + color + "BirdUpFlap.png").getImage();
+        Image wingMid = new ImageIcon(SPRITE_PATH + color + "BirdMidFlap.png").getImage();
+        Image wingDown = new ImageIcon(SPRITE_PATH + color + "BirdDownFlap.png").getImage();
 
         // Initialize physics of bird
         this.velocity = 0;
@@ -71,9 +71,9 @@ class Bird implements ActionListener{
         }
 
         // Use index to change the wing positions to match the bird color
-        this.wingPositions[0] = new ImageIcon(spritePath + colors[colorIndex] + "BirdUpFlap.png").getImage();
-        this.wingPositions[1] = new ImageIcon(spritePath + colors[colorIndex] + "BirdMidFlap.png").getImage();
-        this.wingPositions[2] = new ImageIcon(spritePath + colors[colorIndex] + "BirdDownFlap.png").getImage();
+        this.wingPositions[0] = new ImageIcon(SPRITE_PATH + colors[colorIndex] + "BirdUpFlap.png").getImage();
+        this.wingPositions[1] = new ImageIcon(SPRITE_PATH + colors[colorIndex] + "BirdMidFlap.png").getImage();
+        this.wingPositions[2] = new ImageIcon(SPRITE_PATH + colors[colorIndex] + "BirdDownFlap.png").getImage();
     }
 
     /**
