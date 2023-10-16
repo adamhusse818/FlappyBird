@@ -17,7 +17,7 @@ class Bird implements ActionListener{
     Timer timer; // Timer for how often we change the wing position
     private int changeBy = 1; // Use this to change the element currently selected in the list
     int velocity; // Setting velocity of the bird
-    int acceleration = 1; // Setting acceleration of the bird
+    int acceleration; // Setting acceleration of the bird
     final private String[] colors = {"Blue", "Yellow", "Red"}; // These are the different colors the bird can be
     private int colorIndex = 1; // Keep track of the color index. Original color is yellow, hence it being 1
 
@@ -28,7 +28,9 @@ class Bird implements ActionListener{
         Image wingMid = new ImageIcon(spritePath + color + "BirdMidFlap.png").getImage();
         Image wingDown = new ImageIcon(spritePath + color + "BirdDownFlap.png").getImage();
 
+        // Initialize physics of bird
         this.velocity = 0;
+        this.acceleration = 1;
 
         // Add the images to the list and set the initial position of the bird wing to the middle
         this.wingPositions[0] = wingUp;
