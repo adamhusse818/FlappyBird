@@ -26,5 +26,6 @@ public class Theme{
             this.theme = new ImageIcon(SPRITE_PATH + themes[themeIndex + 1] + ".png").getImage();
             this.themeIndex++;
         }
+        Game.lastThemeUsed = this.themes[this.themeIndex];
     }
 }
