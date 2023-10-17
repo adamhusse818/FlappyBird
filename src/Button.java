@@ -7,7 +7,7 @@
 // Only need JButton here
 import javax.swing.JButton;
 
-class Button extends JButton{
+public class Button extends JButton{
     Button(String text, int x, int y){
         // Initial setups for each button
         this.setFocusable(false);
@@ -20,7 +20,7 @@ class Button extends JButton{
      * Method used for enabling the button
      * Helpful when switching between being at the menu or during the game
      */
-    void enableButton(){
+    public void enableButton(){
         this.setVisible(true);
         this.setEnabled(true);
     }
@@ -29,7 +29,7 @@ class Button extends JButton{
      * Method used for disabling the button
      * Helpful when switching between being at the menu or during the game
      */
-    void disableButton(){
+    public void disableButton(){
         this.setVisible(false);
         this.setEnabled(false);
     }
