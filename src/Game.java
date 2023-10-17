@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-class Game extends JPanel implements ActionListener, MouseListener{
+public class Game extends JPanel implements ActionListener, MouseListener{
     private final String SPRITE_PATH = "Assets/Sprites/"; // Use this for all sprites
     private Image base, readyMessage, gameOverMessage, endScreen; // Images associated with the gameplay
     private int xBase; // Initial x position of the ground
@@ -36,7 +36,7 @@ class Game extends JPanel implements ActionListener, MouseListener{
             new ImageIcon("Assets/Sprites/9.png")
     };
 
-    Game(){
+    public Game(){
         // Some initializations
         screenVelocity = 20;
         yEndMessage = 600;
@@ -215,7 +215,7 @@ class Game extends JPanel implements ActionListener, MouseListener{
      * This function tests if the bird collided with a pipe or the ground
      * If it does, we end the game and play the lovely sound of death
      */
-    void collisionTest(){
+    public void collisionTest(){
         /*
          Since the physics don't always allow the bird to be exactly at a certain point,
          we test if the bird is within a certain amount of pixels to the area
@@ -239,7 +239,7 @@ class Game extends JPanel implements ActionListener, MouseListener{
     /**
      * This function restarts the game by resetting the variables and objects
      */
-    void restart(){
+    public void restart(){
         gameOver = false;
         gameStarted = false;
         birdButton.enableButton();
@@ -261,7 +261,7 @@ class Game extends JPanel implements ActionListener, MouseListener{
      * 30 pts is gold, 40 pts is platinum
      * @return a String for the medal that is earned by the user
      */
-    String determineMedal(){
+    public String determineMedal(){
         String medal = SPRITE_PATH;
         if(score >= 40){
             medal += "MedalPlatinum.png";
@@ -286,7 +286,7 @@ class Game extends JPanel implements ActionListener, MouseListener{
      * If the sound does not exist, we messed up and an error is thrown
      * @param soundName a string for the sound that is played
      */
-    static void playSound(String soundName){
+    public static void playSound(String soundName){
         String audioPath = "Assets/Audio/";
         String soundFile = audioPath + soundName + ".wav";
         try{
