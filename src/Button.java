@@ -8,7 +8,7 @@
 import javax.swing.JButton;
 
 public class Button extends JButton{
-    Button(String text, int x, int y){
+    public Button(String text, int x, int y){
         // Initial setups for each button
         this.setFocusable(false);
         this.setLayout(null);
