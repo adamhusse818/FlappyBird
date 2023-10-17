@@ -1,7 +1,6 @@
 /**
  * Class for designing the interface of the panel that is added to the frame
  * The entire structure of the game is handled here
- * TO-DO: Get a picture of the "new" for a new high score
  */
 
 import javax.swing.*;
@@ -13,14 +12,14 @@ import java.util.Scanner;
 
 public class Game extends JPanel implements ActionListener, MouseListener{
     private final String SPRITE_PATH = "Assets/Sprites/"; // Use this for all sprites
-    private Image base, readyMessage, gameOverMessage, endScreen; // Images associated with the gameplay
+    private Image base, readyMessage, gameOverMessage, endScreen, newImage; // Images associated with the gameplay
     private int xBase; // Initial x position of the ground
     private Bird bird; // Bird object
     static String lastBirdColorUsed; // Used for last user bird color, if exists
     static String lastThemeUsed; // Used for last theme user used, if exists
     static String[] data; // Used for collecting user data
     private Pipe[] pipes; // Array used to store the pairs of pipes
-    private boolean gameStarted, gameOver; // Different states of the game
+    private boolean gameStarted, gameOver, newHighScore; // Different states of the game
     private int score; // Score of the user
     private int highScore; // Highest score of user
     private int yEndMessage; // Used for displaying the end message
@@ -82,6 +81,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
         readyMessage = new ImageIcon(SPRITE_PATH + "Message.png").getImage();
         gameOverMessage = new ImageIcon(SPRITE_PATH + "GameOver.png").getImage();
         endScreen = new ImageIcon(SPRITE_PATH + "EndScreen.png").getImage();
+        newImage = new ImageIcon(SPRITE_PATH + "NewBest.png").getImage();
 
         // Initialize the bird
         bird = new Bird(lastBirdColorUsed);
@@ -132,6 +132,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
         // Initialize our states of the game
         gameStarted = false;
         gameOver = false;
+        newHighScore = false;
 
         // Initialize timer
         // Used for motion of theme
@@ -187,10 +188,19 @@ public class Game extends JPanel implements ActionListener, MouseListener{
                 Image digitImage = numImages[Integer.parseInt(digit)].getImage();
                 g2D.drawImage(digitImage, 240 + (20 * i), yEndMessage + 45, null);
             }
+            tempScore = String.valueOf(highScore);
+            for(int i = 0; i < tempScore.length(); i++){
+                String digit = tempScore.substring(i, i + 1);
+                Image digitImage = numImages[Integer.parseInt(digit)].getImage();
+                g2D.drawImage(digitImage, 240 + (20 * i), yEndMessage + 100, null);
+            }
             String medal = determineMedal();
             if(medal != null){
                 Image medalImage = new ImageIcon(medal).getImage();
                 g2D.drawImage(medalImage, 55, yEndMessage + 55, null);
+            }
+            if(newHighScore){
+                g2D.drawImage(newImage, 215, yEndMessage + 80, null);
             }
             restartButton.enableButton();
         }
@@ -258,6 +268,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
             if(score > highScore){
                 highScore = score;
                 data[0] = String.valueOf(highScore);
+                newHighScore = true;
             }
         }
         for(Pipe p : pipes){
@@ -269,6 +280,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
                 if(score > highScore){
                     highScore = score;
                     data[0] = String.valueOf(highScore);
+                    newHighScore = true;
                 }
             }
         }
@@ -280,6 +292,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
     public void restart(){
         gameOver = false;
         gameStarted = false;
+        newHighScore = false;
         birdButton.enableButton();
         themeButton.enableButton();
         bird = new Bird(lastBirdColorUsed);
