@@ -1,23 +1,28 @@
 /**
  * Class for designing the interface of the panel that is added to the frame
  * The entire structure of the game is handled here
- * TO-DO: Implement file operation that saves player high score, bird color, and background
+ * TO-DO: Get a picture of the "new" for a new high score
  */
 
 import javax.swing.*;
 import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
+import java.util.Scanner;
 
 public class Game extends JPanel implements ActionListener, MouseListener{
     private final String SPRITE_PATH = "Assets/Sprites/"; // Use this for all sprites
     private Image base, readyMessage, gameOverMessage, endScreen; // Images associated with the gameplay
     private int xBase; // Initial x position of the ground
     private Bird bird; // Bird object
+    static String lastBirdColorUsed; // Used for last user bird color, if exists
+    static String lastThemeUsed; // Used for last theme user used, if exists
+    static String[] data; // Used for collecting user data
     private Pipe[] pipes; // Array used to store the pairs of pipes
     private boolean gameStarted, gameOver; // Different states of the game
     private int score; // Score of the user
+    private int highScore; // Highest score of user
     private int yEndMessage; // Used for displaying the end message
     private int screenVelocity; // Velocity associated with the end screen
     private Button birdButton, themeButton, restartButton; // Buttons for different purposes
@@ -37,6 +42,29 @@ public class Game extends JPanel implements ActionListener, MouseListener{
     };
 
     public Game(){
+        // Attempt to make a file if it does not exist already. If exists, we get data
+        try{
+            File file = new File("Data.txt");
+            if(file.createNewFile()){
+                data = new String[3];
+                highScore = 0;
+                data[0] = String.valueOf(0);
+                lastBirdColorUsed = "Yellow";
+                data[1] = "Yellow";
+                lastThemeUsed = "Day";
+                data[2] = "Day";
+            }else{
+                Scanner scan = new Scanner(file);
+                data = scan.nextLine().split(",");
+                scan.close();
+                highScore = Integer.parseInt(data[0]);
+                lastBirdColorUsed = data[1];
+                lastThemeUsed = data[2];
+            }
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+
         // Some initializations
         screenVelocity = 20;
         yEndMessage = 600;
@@ -49,20 +77,21 @@ public class Game extends JPanel implements ActionListener, MouseListener{
         this.addMouseListener(this);
 
         // Setting up the Flappy Bird environment by creating the themes, screens, and messages
-        background = new Theme("Day");
+        background = new Theme(lastThemeUsed);
         base = new ImageIcon(SPRITE_PATH + "Base.png").getImage();
         readyMessage = new ImageIcon(SPRITE_PATH + "Message.png").getImage();
         gameOverMessage = new ImageIcon(SPRITE_PATH + "GameOver.png").getImage();
         endScreen = new ImageIcon(SPRITE_PATH + "EndScreen.png").getImage();
 
         // Initialize the bird
-        bird = new Bird("Yellow");
+        bird = new Bird(lastBirdColorUsed);
 
         // Create button for changing bird color
         birdButton = new Button("Bird Color", 25, 435);
         birdButton.addActionListener(e -> {
             if(e.getSource() == birdButton){
                 bird.changeColor();
+                data[1] = lastBirdColorUsed;
             }
         });
         this.add(birdButton);
@@ -84,6 +113,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
         themeButton.addActionListener(e -> {
             if(e.getSource() == themeButton){
                 background.changeTheme();
+                data[2] = lastThemeUsed;
             }
         });
         this.add(themeButton);
@@ -112,6 +142,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
     /**
      * Method used for painting the entire game
      * This will determine which state the game is in, then go from there
+     *
      * @param g the <code>Graphics</code> object to protect
      */
     public void paintComponent(Graphics g){
@@ -147,7 +178,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
                 }
             }
         }
-       if(gameOver){
+        if(gameOver){
             g2D.drawImage(gameOverMessage, 75, 150, null);
             g2D.drawImage(endScreen, 20, yEndMessage, null);
             String tempScore = String.valueOf(score);
@@ -164,14 +195,13 @@ public class Game extends JPanel implements ActionListener, MouseListener{
             restartButton.enableButton();
         }
 
-       // Drawing what is there no matter the state of the game
+        // Drawing what is there no matter the state of the game
         g2D.drawImage(bird.currentWingPos, bird.xBird, bird.yBird, null);
         g2D.drawImage(base, xBase, background.theme.getHeight(null), null);
         g2D.drawImage(base, xBase + base.getWidth(null), background.theme.getHeight(null), null);
     }
 
     /**
-     *
      * @param e the event to be processed
      */
     @Override
@@ -225,6 +255,10 @@ public class Game extends JPanel implements ActionListener, MouseListener{
             bird.acceleration = 0;
             gameOver = true;
             playSound("Hit");
+            if(score > highScore){
+                highScore = score;
+                data[0] = String.valueOf(highScore);
+            }
         }
         for(Pipe p : pipes){
             if(!p.passed && ((bird.yBird <= (p.yTopPipe + 320) || bird.yBird >= (p.yTopPipe + 396))
@@ -232,6 +266,10 @@ public class Game extends JPanel implements ActionListener, MouseListener{
                 gameOver = true;
                 playSound("Hit");
                 playSound("Die");
+                if(score > highScore){
+                    highScore = score;
+                    data[0] = String.valueOf(highScore);
+                }
             }
         }
     }
@@ -244,7 +282,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
         gameStarted = false;
         birdButton.enableButton();
         themeButton.enableButton();
-        bird = new Bird("Yellow");
+        bird = new Bird(lastBirdColorUsed);
         pipes[0].timer.stop();
         pipes[1].timer.stop();
         pipes[0] = new Pipe();
@@ -259,23 +297,20 @@ public class Game extends JPanel implements ActionListener, MouseListener{
      * This function determines which medal the user earns
      * 10 pts is bronze, 20 pts is silver,
      * 30 pts is gold, 40 pts is platinum
+     *
      * @return a String for the medal that is earned by the user
      */
     public String determineMedal(){
         String medal = SPRITE_PATH;
         if(score >= 40){
             medal += "MedalPlatinum.png";
-        }
-        else if(score >= 30){
+        }else if(score >= 30){
             medal += "MedalGold.png";
-        }
-        else if(score >= 20){
+        }else if(score >= 20){
             medal += "MedalSilver.png";
-        }
-        else if(score >= 10){
+        }else if(score >= 10){
             medal += "MedalBronze.png";
-        }
-        else{
+        }else{
             return null;
         }
         return medal;
@@ -284,6 +319,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
     /**
      * This function plays a sound
      * If the sound does not exist, we messed up and an error is thrown
+     *
      * @param soundName a string for the sound that is played
      */
     public static void playSound(String soundName){
@@ -308,6 +344,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
     /**
      * Used to start the game and make the bird jump
      * This is only invoked if the mouse is enabled
+     *
      * @param e the event to be processed
      */
     @Override
