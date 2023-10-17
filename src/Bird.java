@@ -74,6 +74,7 @@ public class Bird implements ActionListener{
         this.wingPositions[0] = new ImageIcon(SPRITE_PATH + colors[colorIndex] + "BirdUpFlap.png").getImage();
         this.wingPositions[1] = new ImageIcon(SPRITE_PATH + colors[colorIndex] + "BirdMidFlap.png").getImage();
         this.wingPositions[2] = new ImageIcon(SPRITE_PATH + colors[colorIndex] + "BirdDownFlap.png").getImage();
+        Game.lastBirdColorUsed = this.colors[this.colorIndex];
     }
 
     /**
