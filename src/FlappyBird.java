@@ -10,7 +10,7 @@
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 
-class FlappyBird extends JFrame{
+public class FlappyBird extends JFrame{
     FlappyBird(){
         // Setting up the frame. Add title, change icon, set characteristics, etc.
         this.setTitle("Flappy Bird");
