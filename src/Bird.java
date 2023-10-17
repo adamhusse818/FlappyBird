@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-class Bird implements ActionListener{
+public class Bird implements ActionListener{
     private final String SPRITE_PATH = "Assets/Sprites/"; // Use this for all file paths for sprites
     private Image[] wingPositions; // Storing wing positions
     Image currentWingPos; // Image of current wing position
@@ -21,7 +21,7 @@ class Bird implements ActionListener{
     private String[] colors = {"Blue", "Yellow", "Red"}; // These are the different colors the bird can be
     private int colorIndex = 1; // Keep track of the color index. Original color is yellow, hence it being 1
 
-    Bird(String color){
+    public Bird(String color){
         // Initialize the list and images for each bird wing position
         this.wingPositions = new Image[3];
         Image wingUp = new ImageIcon(SPRITE_PATH + color + "BirdUpFlap.png").getImage();
@@ -50,7 +50,7 @@ class Bird implements ActionListener{
      * A sound is also played to give it the nice effect
      * The method also tests to make sure the bird stays within the panel
      */
-    void jump(){
+    public void jump(){
         if(this.yBird - 10 <= 0){
             this.yBird = 20;
         }
@@ -61,7 +61,7 @@ class Bird implements ActionListener{
     /**
      * Method used to change the color of the bird
      */
-    void changeColor(){
+    public void changeColor(){
         // Check to make sure we aren't at the end of the list
         if(this.colorIndex == this.colors.length - 1){
             this.colorIndex = 0;
