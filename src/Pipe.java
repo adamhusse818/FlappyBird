@@ -18,7 +18,7 @@ public class Pipe implements ActionListener{
     boolean passed; // Keep track of whether the bird has passed the pair of pipes
     public Pipe(){
         // Use this for all file paths for sprites
-        String spritePath = "Assets/Sprites/";
+        String spritePath = "assets/sprites/";
         this.pipe = new ImageIcon(spritePath + "PipeGreen.png").getImage();
 
         // Use the random class to generate a random y value for the pipe
