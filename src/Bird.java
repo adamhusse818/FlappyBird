@@ -8,7 +8,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Bird implements ActionListener{
-    private final String SPRITE_PATH = "Assets/Sprites/"; // Use this for all file paths for sprites
+    private final String SPRITE_PATH = "assets/sprites/"; // Use this for all file paths for sprites
     private Image[] wingPositions; // Storing wing positions
     Image currentWingPos; // Image of current wing position
     private int wingIndex; // Keep track of the index of the current wing position
