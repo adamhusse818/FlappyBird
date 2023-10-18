@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Game extends JPanel implements ActionListener, MouseListener{
-    private final String SPRITE_PATH = "Assets/Sprites/"; // Use this for all sprites
+    private final String SPRITE_PATH = "assets/sprites/"; // Use this for all sprites
     private Image base, readyMessage, gameOverMessage, endScreen, newImage; // Images associated with the gameplay
     private int xBase; // Initial x position of the ground
     private Bird bird; // Bird object
@@ -28,22 +28,22 @@ public class Game extends JPanel implements ActionListener, MouseListener{
     private Theme background; // The background used for the game
 
     private ImageIcon[] numImages = {
-            new ImageIcon("Assets/Sprites/0.png"),
-            new ImageIcon("Assets/Sprites/1.png"),
-            new ImageIcon("Assets/Sprites/2.png"),
-            new ImageIcon("Assets/Sprites/3.png"),
-            new ImageIcon("Assets/Sprites/4.png"),
-            new ImageIcon("Assets/Sprites/5.png"),
-            new ImageIcon("Assets/Sprites/6.png"),
-            new ImageIcon("Assets/Sprites/7.png"),
-            new ImageIcon("Assets/Sprites/8.png"),
-            new ImageIcon("Assets/Sprites/9.png")
+            new ImageIcon(SPRITE_PATH + "0.png"),
+            new ImageIcon(SPRITE_PATH + "1.png"),
+            new ImageIcon(SPRITE_PATH + "2.png"),
+            new ImageIcon(SPRITE_PATH + "3.png"),
+            new ImageIcon(SPRITE_PATH + "4.png"),
+            new ImageIcon(SPRITE_PATH + "5.png"),
+            new ImageIcon(SPRITE_PATH + "6.png"),
+            new ImageIcon(SPRITE_PATH + "7.png"),
+            new ImageIcon(SPRITE_PATH + "8.png"),
+            new ImageIcon(SPRITE_PATH + "9.png")
     };
 
     public Game(){
         // Attempt to make a file if it does not exist already. If exists, we get data
         try{
-            File file = new File("Data.txt");
+            File file = new File("data.txt");
             if(file.createNewFile()){
                 data = new String[3];
                 highScore = 0;
@@ -77,8 +77,8 @@ public class Game extends JPanel implements ActionListener, MouseListener{
 
         // Setting up the Flappy Bird environment by creating the themes, screens, and messages
         background = new Theme(lastThemeUsed);
-        base = new ImageIcon(SPRITE_PATH + "Base.png").getImage();
-        readyMessage = new ImageIcon(SPRITE_PATH + "Message.png").getImage();
+        base = new ImageIcon(SPRITE_PATH + "base.png").getImage();
+        readyMessage = new ImageIcon(SPRITE_PATH + "message.png").getImage();
         gameOverMessage = new ImageIcon(SPRITE_PATH + "GameOver.png").getImage();
         endScreen = new ImageIcon(SPRITE_PATH + "EndScreen.png").getImage();
         newImage = new ImageIcon(SPRITE_PATH + "NewBest.png").getImage();
@@ -101,7 +101,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
         restartButton.disableButton();
         restartButton.addActionListener(e -> {
             if(e.getSource() == restartButton){
-                playSound("Swoosh");
+                playSound("swoosh");
                 restart();
             }
             restartButton.disableButton();
@@ -167,7 +167,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
                 if(x <= 48 && !pipe.passed){
                     score++;
                     pipe.passed = true;
-                    playSound("Point");
+                    playSound("point");
                 }
             }
             if(!gameOver){
@@ -264,7 +264,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
             bird.velocity = 0;
             bird.acceleration = 0;
             gameOver = true;
-            playSound("Hit");
+            playSound("hit");
             if(score > highScore){
                 highScore = score;
                 data[0] = String.valueOf(highScore);
@@ -275,8 +275,8 @@ public class Game extends JPanel implements ActionListener, MouseListener{
             if(!p.passed && ((bird.yBird <= (p.yTopPipe + 320) || bird.yBird >= (p.yTopPipe + 396))
                     && (p.xPipe >= 56 && p.xPipe <= 124))){
                 gameOver = true;
-                playSound("Hit");
-                playSound("Die");
+                playSound("hit");
+                playSound("die");
                 if(score > highScore){
                     highScore = score;
                     data[0] = String.valueOf(highScore);
@@ -336,7 +336,7 @@ public class Game extends JPanel implements ActionListener, MouseListener{
      * @param soundName a string for the sound that is played
      */
     public static void playSound(String soundName){
-        String audioPath = "Assets/Audio/";
+        String audioPath = "assets/audio/";
         String soundFile = audioPath + soundName + ".wav";
         try{
             Clip clip = AudioSystem.getClip();
