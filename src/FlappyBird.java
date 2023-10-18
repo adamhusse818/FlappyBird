@@ -19,7 +19,7 @@ public class FlappyBird extends JFrame implements WindowListener{
         this.setTitle("Flappy Bird");
 
         // Use this for all file paths for sprites
-        String spritePath = "Assets/Sprites/";
+        String spritePath = "assets/sprites/";
         this.setIconImage(new ImageIcon(spritePath + "YellowBirdMidFlap.png").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -48,7 +48,7 @@ public class FlappyBird extends JFrame implements WindowListener{
     @Override
     public void windowClosing(WindowEvent e){
         try{
-            FileWriter fw = new FileWriter("Data.txt");
+            FileWriter fw = new FileWriter("data.txt");
             String toWrite = "";
             for(int i = 0; i < 3; i++){
                 if(i == 2){
@@ -96,7 +96,7 @@ public class FlappyBird extends JFrame implements WindowListener{
          To prevent this from effecting gameplay, a silent sound file is played
          The thread is set to sleep for half a second to prevent the initial freeze
          */
-        Game.playSound("Silent");
+        Game.playSound("silent");
         try{
             Thread.sleep(500);
         }catch(InterruptedException e){
