@@ -10,7 +10,7 @@ public class Theme{
     Image theme; // Used to store image of background;
     private int themeIndex; // Keep track of the index of the current theme
     private String[] themes = {"Day", "Night"}; // Array of the backgrounds available
-    private final String SPRITE_PATH = "Assets/Sprites/Background"; // Use this for all file paths for sprites
+    private final String SPRITE_PATH = "assets/sprites/Background"; // Use this for all file paths for sprites
 
     public Theme(String theme){
         this.theme = new ImageIcon(SPRITE_PATH + theme + ".png").getImage();
