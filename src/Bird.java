@@ -55,7 +55,7 @@ public class Bird implements ActionListener{
             this.yBird = 20;
         }
         this.velocity = -10;
-        Game.playSound("Wing");
+        Game.playSound("wing");
     }
 
     /**
